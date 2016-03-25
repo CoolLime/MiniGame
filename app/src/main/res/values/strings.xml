@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CoolLime</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="action_settings">Settings</string>
+</resources>

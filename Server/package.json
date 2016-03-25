@@ -1,0 +1,29 @@
+{
+  "name": "coollime",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Server.js",
+  "dependencies": {
+    "express": "^4.13.4",
+    "mongo": "^0.1.0",
+    "mysql": "^2.10.2",
+    "socket.io": "^1.4.5",
+    "node-mysql": "^0.4.2",
+    "mongodb": "^2.1.11"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node Server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoolLime/Mini_Game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CoolLime/Mini_Game/issues"
+  },
+  "homepage": "https://github.com/CoolLime/Mini_Game#readme"
+}

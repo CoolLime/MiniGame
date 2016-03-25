@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_id": "minigame-5096a",
+    "project_number": "31388769383",
+    "name": "MiniGame"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:31388769383:android:7c8920aabcc8b370",
+        "client_id": "android:com.coollime.coollime",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.coollime.coollime",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "31388769383-6ssdr2597ak8ik387oppkp9nl3bf69oh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.coollime.coollime",
+            "certificate_hash": "A9972615EB7A0338C620715279D73FC01280153C"
+          }
+        },
+        {
+          "client_id": "31388769383-k21qce653v5qg5d0haudn6fa17i1q0aj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
