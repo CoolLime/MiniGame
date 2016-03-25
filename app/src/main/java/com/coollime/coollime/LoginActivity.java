@@ -117,6 +117,7 @@ public class LoginActivity extends AppCompatActivity implements
         } else {
             updateUI(false);
         }
+
     }
     // [END handleSignInResult]
 
