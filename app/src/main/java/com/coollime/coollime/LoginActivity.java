@@ -110,9 +110,12 @@ public class LoginActivity extends AppCompatActivity implements
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            Toast.makeText(getApplicationContext(), acct.getId() + "," + acct.getDisplayName(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), acct.getId() + "," + acct.getDisplayName(), Toast.LENGTH_SHORT).show();
             updateUI(true);
-            setContentView(R.layout.activity_menu);
+            //setContentView(R.layout.activity_g1to50);
+
+            Intent Game = new Intent(LoginActivity.this, G1to50Activity.class);
+            startActivity(Game);
 
         } else {
             updateUI(false);

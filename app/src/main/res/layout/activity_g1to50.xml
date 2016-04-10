@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="6"
+    tools:context="com.coollime.coollime.Gs1to50Activity">
+
+    <TextView
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Game 1 To 50!"
+        android:gravity="center_vertical|center_horizontal"
+        android:textSize="14pt"
+        />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textSize="14pt"
+        android:layout_weight="1"
+        android:text = "@string/init_time"
+        />
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/btnlist"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:gravity="center"
+        >
+        <Button android:id="@+id/btn1" android:gravity="center_vertical|center_horizontal|clip_vertical|clip_horizontal" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn2" android:layout_toRightOf="@+id/btn1" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn3" android:layout_toRightOf="@+id/btn2" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn4" android:layout_toRightOf="@+id/btn3" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn5" android:layout_toRightOf="@+id/btn4" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn6" android:layout_below="@+id/btn1" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn7" android:layout_below="@+id/btn2" android:layout_toRightOf="@+id/btn6" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn8" android:layout_below="@+id/btn3" android:layout_toRightOf="@+id/btn7" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn9" android:layout_below="@+id/btn4" android:layout_toRightOf="@+id/btn8" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn10" android:layout_below="@+id/btn5" android:layout_toRightOf="@+id/btn9" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn11" android:layout_below="@+id/btn6" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn12" android:layout_below="@+id/btn7" android:layout_toRightOf="@+id/btn11" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn13" android:layout_below="@+id/btn8"  android:layout_toRightOf="@+id/btn12" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn14" android:layout_below="@+id/btn9" android:layout_toRightOf="@+id/btn13" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn15" android:layout_below="@+id/btn10" android:layout_toRightOf="@+id/btn14" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn16" android:layout_below="@+id/btn11" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn17" android:layout_below="@+id/btn12" android:layout_toRightOf="@+id/btn16" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn18" android:layout_below="@+id/btn13" android:layout_toRightOf="@+id/btn17" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn19" android:layout_below="@+id/btn14" android:layout_toRightOf="@+id/btn18" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn20" android:layout_below="@+id/btn15" android:layout_toRightOf="@+id/btn19" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn21" android:layout_below="@+id/btn16" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn22" android:layout_below="@+id/btn17" android:layout_toRightOf="@+id/btn21" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn23" android:layout_below="@+id/btn18" android:layout_toRightOf="@+id/btn22" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn24" android:layout_below="@+id/btn19" android:layout_toRightOf="@+id/btn23" android:layout_height="65dp" android:layout_width="65dp"/>
+        <Button android:id="@+id/btn25" android:layout_below="@+id/btn20" android:layout_toRightOf="@+id/btn24" android:layout_height="65dp" android:layout_width="65dp"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

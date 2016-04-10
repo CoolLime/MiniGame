@@ -2,4 +2,6 @@
     <string name="app_name">CoolLime</string>
     <string name="title_activity_menu">MenuActivity</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_game_">Game_Activity</string>
+    <string name="init_time">00.00</string>
 </resources>
