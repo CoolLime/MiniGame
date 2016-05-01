@@ -4,4 +4,11 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_game_">Game_Activity</string>
     <string name="init_time">00.00</string>
+    <string name="choice1">첫번째 카드를 골라주세요</string>
+    <string name="choice2">두번재 카드를 골라주세요</string>
+    <string name="already_selected">이미 고른 카드입니다.</string>
+    <string name="already_correct">이미 맞춘 카드입니다.</string>
+    <string name="correct">맞추었습니다!</string>
+    <string name="wrong">틀렸습니다!</string>
+    <string name="clear">모두 맞추셨습니다!</string>
 </resources>
