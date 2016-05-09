@@ -115,6 +115,9 @@ public class LoginActivity extends AppCompatActivity implements
             //setContentView(R.layout.activity_g1to50);
 
             Intent Game = new Intent(LoginActivity.this, G1to50Activity.class);
+           // Intent Game = new Intent(LoginActivity.this, CardActivity.class);
+            Game.putExtra("Name",acct.getDisplayName());
+
             startActivity(Game);
 
         } else {

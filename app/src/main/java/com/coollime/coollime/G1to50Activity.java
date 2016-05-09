@@ -1,6 +1,8 @@
 package com.coollime.coollime;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.coollime.coollime.db.RankDAO;
+
 import java.util.Random;
 
 public class G1to50Activity extends Activity implements View.OnClickListener,Runnable {
@@ -19,16 +23,20 @@ public class G1to50Activity extends Activity implements View.OnClickListener,Run
     private StopWatch sw = null;
     private int num[] = new int[25];
     private TextView time   = null;
-
+    private RankDAO dao       = null;
+    private Dialog  dlg = null;
     private int index = 1;
     private boolean is_start = false;
+    private TextView result = null;
     String strTime = "000.00";
+    String playerName = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_g1to50);
-
+        Intent intent = getIntent();
+        playerName=intent.getStringExtra("Name");
         index = 1;
         is_start = false;
 
@@ -90,7 +98,7 @@ public class G1to50Activity extends Activity implements View.OnClickListener,Run
 
         if(!is_start && v.equals(btns[0])){
             initNumberArr(1);
-            shakeNumber();
+            //shakeNumber();
 
             for(int i=0; i< 25; i++) {
                 btns[i].setText(num[i]+"");
@@ -101,7 +109,7 @@ public class G1to50Activity extends Activity implements View.OnClickListener,Run
             is_start = !is_start;
 
             initNumberArr(26);
-            shakeNumber();
+            //shakeNumber();
 
             new Thread(this).start();
             sw.start();
@@ -124,7 +132,8 @@ public class G1to50Activity extends Activity implements View.OnClickListener,Run
             index++;
         }
 
-        if(index == 51)
+       // if(index == 51)
+        if(index==26)
         {
             is_start = false;
             sw.stop();
@@ -134,8 +143,9 @@ public class G1to50Activity extends Activity implements View.OnClickListener,Run
     }
 
     public void onSucc() {
-        Toast.makeText(getApplicationContext(),"Finish : "+strTime, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),playerName+" : "+strTime, Toast.LENGTH_LONG).show();
 
+        ShowDialog();
     }
 
     public void run() {
@@ -168,6 +178,31 @@ public class G1to50Activity extends Activity implements View.OnClickListener,Run
             super.handleMessage(msg);
         }
     };
+
+
+
+    public void ShowDialog(){
+        dlg = new Dialog(this);
+        dlg.setContentView(R.layout.dialog);
+        dlg.setTitle("Result");
+        result = (TextView)dlg.findViewById(R.id.result);
+        String r = strTime;
+        Toast.makeText(getApplicationContext(),result.getText(), Toast.LENGTH_LONG).show();
+
+       result.setText(r);
+
+        try {
+            dao.Append(playerName, Double.parseDouble(strTime), "G1to50_RANK");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        dlg.show();
+        sw.reset();
+        InitValue();
+
+    }
+
 
 
 
