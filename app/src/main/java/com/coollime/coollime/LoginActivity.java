@@ -16,10 +16,11 @@ public class LoginActivity extends AppCompatActivity  {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent Game = new Intent(LoginActivity.this, G1to50Activity.class);
+                Intent Menu = new Intent(LoginActivity.this, MenuActivity.class);
                 // Intent Game = new Intent(LoginActivity.this, CardActivity.class);
                 //Game.putExtra("Name", acct.getDisplayName());
-                startActivity(Game);
+                startActivity(Menu);
+                finish();
 
             }
         });

@@ -1,4 +1,4 @@
-package org.coollime.cookie;
+package com.coollime.coollime;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class ToFragment extends Fragment {
+public class G1to50Fragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -25,7 +25,10 @@ public class ToFragment extends Fragment {
         select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent oneto50 = new Intent(G1to50Fragment.super.getActivity(), CardActivity.class);
+                // Intent Game = new Intent(LoginActivity.this, CardActivity.class);
+                //Game.putExtra("Name", acct.getDisplayName());
+                startActivity(oneto50);
             }
         });
 
@@ -37,7 +40,7 @@ public class ToFragment extends Fragment {
         public static final int REQUEST_CODE_ANOTHER = 1001;
 
         public void onstartClick(View v) {
-            Intent intent = new Intent(getApplicationContext(), toActivity1.class);
+            Intent intent = new Intent(getApplicationContext(), G1to50Activity.class);
             startActivityForResult(intent, REQUEST_CODE_ANOTHER);
 
         }

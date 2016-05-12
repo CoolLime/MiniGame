@@ -1,5 +1,3 @@
-package org.coollime.cookie;
-
-
+package com.coollime.coollime;
 public class sildingActivity4 {
 }
