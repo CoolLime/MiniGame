@@ -18,10 +18,8 @@
         android:layout_height="wrap_content"
         android:background="#adff2f"
         android:text="start game"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/section_label"
         android:layout_centerHorizontal="true" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ddd"/>
+
+
 </RelativeLayout>

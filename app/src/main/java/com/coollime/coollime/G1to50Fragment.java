@@ -18,7 +18,7 @@ public class G1to50Fragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.to, container, false);
+        View rootView = inflater.inflate(R.layout.g1to50, container, false);
         Button select;
         select = (Button) rootView.findViewById(R.id.start);
 

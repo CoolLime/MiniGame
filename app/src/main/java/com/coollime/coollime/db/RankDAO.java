@@ -54,7 +54,7 @@ public class RankDAO {
     public ArrayList<HashMap<String,String>> GetRankData(String db){
         ArrayList<HashMap<String,String>> _Items = new ArrayList<HashMap<String,String>>();
         Cursor _cursor = null;
-        if(db.equals("G1to50")) {
+        if(db.equals("g1to50")) {
             _cursor = _db.rawQuery("Select name, inst_dt || '   ' || score || '초' From G1to50_RANK Order By score asc ", null);
         }
         else if(db.equals("Card")){

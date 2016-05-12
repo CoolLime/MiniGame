@@ -51,7 +51,7 @@ public class CardActivity extends Activity {
 		int temp = 0;
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_card);
 
 		tv = (TextView)findViewById( R.id.text );
 		mainLinear = (LinearLayout) findViewById(R.id.main_linear);
