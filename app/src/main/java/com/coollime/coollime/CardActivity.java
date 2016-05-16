@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -81,7 +82,7 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 		end = 0x7f0200ac; // 리소스 번호 마지막
 
 		// 시작부터 끝까지 카드중 8개의 카드를 뽑아낸다.
-		bitmapDrawableBack = (BitmapDrawable)res.getDrawable( R.drawable.back,null);
+		bitmapDrawableBack = (BitmapDrawable) ResourcesCompat.getDrawable(getResources(), R.drawable.back,null);
 		bitmapBack = bitmapDrawableBack.getBitmap();
 
 		// 랜덤으로 이미지를 읽어온다.
@@ -125,13 +126,13 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 
         for(int i=0 ;i< tempArr.length;i++){
             Log.e("Arr", "tempArr["+i+"]"+tempArr[i]);
-            Log.e("Arr",res.getDrawable(tempArr[i],null)+"");
+            Log.e("Arr",ResourcesCompat.getDrawable(getResources(),tempArr[i],null)+"");
         }
 
 		// 랜덤한 이미지를 로드한다.
 
 		for (int i = 0; i < bitmapsDrawables.length; i++) {
-			bitmapsDrawables[ i ] = (BitmapDrawable) res.getDrawable(tempArr[i],null);
+			bitmapsDrawables[ i ] = (BitmapDrawable) ResourcesCompat.getDrawable(getResources(),tempArr[i],null);
             //bitmapsDrawables[ i ] = (BitmapDrawable) res.getDrawable(R.drawable.m01_songhak_1_1,null);
 		}
 
