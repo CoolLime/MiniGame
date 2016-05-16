@@ -364,7 +364,6 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 		switch( item.getItemId() )
 		{
 			case 1:
-
 				//초기화
 				getRandomImages();
 				mixIndexes();
