@@ -24,7 +24,8 @@ public class memoryFragment extends Fragment {
             select.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent =new Intent(getActivity(),memoryActivity3.class);
+                    Intent memory = new Intent(getActivity(), memoryActivity3.class);
+                    startActivity(memory);
 
 
 

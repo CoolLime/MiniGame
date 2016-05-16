@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -24,7 +23,7 @@ public class memoryActivity3 extends AppCompatActivity{
     public void onCreate(Bundle SaveInstanceState){
         super.onCreate(SaveInstanceState);
         a=new GameView(this);
-        setContentView(a);
+       // setContentView(R.layout.layout_memory);
 
     }
 
@@ -33,6 +32,8 @@ class GameView extends View {
     final static int Blank = 0;
     final static int Play = 1;
     final static int SIZE = 64;
+    static int FLAG=0;
+    static int Score=0;
 
     static Boolean randomShape = true;
     static Boolean randomSize = true;
@@ -97,11 +98,18 @@ class GameView extends View {
             if (flo == -1) {
                 return true;
             }
+
             if (flo == arShape.size() - 1) {
                 status = Blank;
+                Score=Score+(FLAG+1)*10;
+                FLAG=0;
                 invalidate();
                 cHandler.sendEmptyMessageDelayed(0, DELAY);
-            } else {
+            }else if(flo==FLAG){
+                FLAG++;
+                Score=Score+(FLAG+1)*10;
+            }
+            else {
                 new AlertDialog.Builder(getContext()).setMessage("다시하기")
                         .setPositiveButton("다시하기", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int witchButton) {
@@ -186,7 +194,6 @@ class GameView extends View {
             shape.color = Color.BLACK;
         }
         shape.rt = rect;
-        Log.e("ADD", shape + "");
         arShape.add(shape);
     }
 

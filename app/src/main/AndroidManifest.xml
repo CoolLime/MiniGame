@@ -19,6 +19,7 @@
 
         <activity android:name=".G1to50Activity"></activity>
         <activity android:name=".CardActivity"></activity>
+        <activity android:name=".memoryActivity3"></activity>
 
 
 
