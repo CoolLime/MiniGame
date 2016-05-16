@@ -1,7 +1,6 @@
 package com.coollime.coollime;
 
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,9 +26,7 @@ public class cardFragment extends Fragment {
         select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent card = new Intent(cardFragment.super.getActivity(), CardActivity.class);
-                // Intent Game = new Intent(LoginActivity.this, CardActivity.class);
-                //Game.putExtra("Name", acct.getDisplayName());
+                Intent card = new Intent(getActivity(), CardActivity.class);
                 startActivity(card);
             }
         });

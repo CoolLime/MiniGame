@@ -34,7 +34,7 @@ public class RankDAO {
     private void OpenDatabase() throws Exception {
         try{
             if(_db == null){
-                _db = _activity.openOrCreateDatabase("db", Activity.MODE_PRIVATE, null);
+                _db = _activity.openOrCreateDatabase("DBhelper", Activity.MODE_PRIVATE, null);
                 //_db.execSQL("drop table T_RANK");
                 _db.execSQL("Create Table IF NOT EXISTS G1to50_RANK (name varchar(30), score DECIMAL(7,2), inst_dt date) ");
                 _db.execSQL("Create Index IF NOT EXISTS G1_IDX_SCORE ON G1to50_RANK (score asc)");
@@ -57,8 +57,8 @@ public class RankDAO {
         if(db.equals("g1to50")) {
             _cursor = _db.rawQuery("Select name, inst_dt || '   ' || score || '초' From G1to50_RANK Order By score asc ", null);
         }
-        else if(db.equals("Card")){
-            _cursor =  _db.rawQuery("Select name, inst_dt || '   ' || score || '점' From Card_RANK Order By score asc ", null);
+        else if(db.equals("card")){
+            _cursor =  _db.rawQuery("Select name, inst_dt || '   ' || score || '초' From Card_RANK Order By score asc ", null);
         }
 
         int nRank = 1;

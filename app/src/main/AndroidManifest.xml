@@ -15,9 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MenuActivity"></activity>
+
         <activity android:name=".G1to50Activity"></activity>
         <activity android:name=".CardActivity"></activity>
-        <activity android:name=".MenuActivity"></activity>
 
 
 

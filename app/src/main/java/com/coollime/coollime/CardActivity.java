@@ -1,6 +1,5 @@
 package com.coollime.coollime;
 
-import com.game.StopWatch;
 
 import android.app.Activity;
 import android.content.res.Resources;
@@ -10,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,35 +22,34 @@ import android.widget.TextView;
 
 public class CardActivity extends Activity implements View.OnClickListener, Runnable {
 	/** Called when the activity is first created. */
+	LinearLayout mainLinear; // ì „ì²´ ë ˆì´ì•„ì›ƒ
+	LinearLayout[] linearRows; // í–‰ì˜ ìˆ˜
 
-	LinearLayout mainLinear; // ÀüÃ¼ ·¹ÀÌ¾Æ¿ô
-	LinearLayout[] linearRows; // ÇàÀÇ ¼ö
+	ImageButton[] buttons; // ì´ë¯¸ì§€ ë²„íŠ¼ ë°°ì—´
+	BitmapDrawable[] bitmapsDrawables; // drawable ë°°ì—´
+	Bitmap[] bitmaps; // ë¹„íŠ¸ë§µ ë°°ì—´
 
-	ImageButton[] buttons; // ÀÌ¹ÌÁö ¹öÆ° ¹è¿­
-	BitmapDrawable[] bitmapsDrawables; // drawable ¹è¿­
-	Bitmap[] bitmaps; // ºñÆ®¸Ê ¹è¿­
-	
 	BitmapDrawable bitmapDrawableBack;
 	Bitmap bitmapBack;
-	
-	int[] indexes; // Ä«µåÀÇ °íÀ¯¹øÈ£ ÀúÀå ¹è¿­
-	
-	int[] tempArr = null; // ÀÓ½Ã Á¤¼ö ¹è¿­	
+
+	int[] indexes; // ì¹´ë“œì˜ ê³ ìœ ë²ˆí˜¸ ì €ì¥ ë°°ì—´
+
+	int[] tempArr = null; // ì„ì‹œ ì •ìˆ˜ ë°°ì—´	
 	int maximum = 4;
 	int start, end;
-	
+
 	int[] correctIndexArray;
 	int[] selectedIndex;
 	int selectedCardIndex;
-	
+
 	Resources res;
 	boolean bPassible = true;
-	
-	TextView tv;		//°ÔÀÓ ÁøÇà »óÅÂ ÅØ½ºÆ® ºä
-	StopWatch sw=null;	//½ºÅé ¿öÄ¡ Å¬·¡½º
-	TextView time=null;	//½ºÅé ¿öÄ¡ ÅØ½ºÆ®ºä
+
+	TextView tv;		//ê²Œì„ ì§„í–‰ ìƒíƒœ í…ìŠ¤íŠ¸ ë·°
+	StopWatch sw=null;	//ìŠ¤í†± ì›Œì¹˜ í´ë˜ìŠ¤
+	TextView time=null;	//ìŠ¤í†± ì›Œì¹˜ í…ìŠ¤íŠ¸ë·°
 	Button stBtn;
-	
+
 	boolean is_start=false;
 	String strTime="000.00";
 
@@ -59,241 +58,247 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 		int temp = 0;
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		
+		setContentView(R.layout.activity_card);
+
 		is_start=false;
 
 		tv = (TextView)findViewById( R.id.text );
-		mainLinear = (LinearLayout) findViewById(R.id.main_linear); // ÀüÃ¼ ¸®´Ï¾î
+		mainLinear = (LinearLayout) findViewById(R.id.main_linear); // ì „ì²´ ë¦¬ë‹ˆì–´
 		time = (TextView)findViewById(R.id.time);
 		time.setTextColor(Color.RED);
 		stBtn=(Button)findViewById(R.id.stBtn);
-		
+
 		sw=new StopWatch();
-		
-		tv.setText( R.string.choice1 ); // ¸Ş½ÃÁö°¡ Ãâ·ÂµÇ´Â ÅØ½ºÆ® ºä
-		tv.setTextColor( Color.BLUE );
-		tv.setGravity( Gravity.CENTER_HORIZONTAL );
 
-		res = getResources(); // ¸®¼Ò½º ¾ò±â
-		indexes = new int[ maximum * maximum ]; // ÀÌ¹ÌÁöÀÇ °íÀ¯¹øÈ£¸¦ ±â¾ïÇÑ´Ù.
+		tv.setText( R.string.choice1 ); // ë©”ì‹œì§€ê°€ ì¶œë ¥ë˜ëŠ” í…ìŠ¤íŠ¸ ë·°
+		tv.setTextColor(Color.BLUE);
+		tv.setGravity(Gravity.CENTER_HORIZONTAL);
 
-		start = 0x7f020004; // ¸®¼Ò½º ¹øÈ£ Ã³À½
-		end = 0x7f020031; // ¸®¼Ò½º ¹øÈ£ ¸¶Áö¸·
- 
-		// ½ÃÀÛºÎÅÍ ³¡±îÁö Ä«µåÁß 8°³ÀÇ Ä«µå¸¦ »Ì¾Æ³½´Ù.
-		bitmapDrawableBack = (BitmapDrawable)res.getDrawable( R.drawable.back );
+		res = getResources(); // ë¦¬ì†ŒìŠ¤ ì–»ê¸°
+		indexes = new int[ maximum * maximum ]; // ì´ë¯¸ì§€ì˜ ê³ ìœ ë²ˆí˜¸ë¥¼ ê¸°ì–µí•œë‹¤.
+
+		start = 0x7f02007f; // ë¦¬ì†ŒìŠ¤ ë²ˆí˜¸ ì²˜ìŒ
+		end = 0x7f0200ac; // ë¦¬ì†ŒìŠ¤ ë²ˆí˜¸ ë§ˆì§€ë§‰
+
+		// ì‹œì‘ë¶€í„° ëê¹Œì§€ ì¹´ë“œì¤‘ 8ê°œì˜ ì¹´ë“œë¥¼ ë½‘ì•„ë‚¸ë‹¤.
+		bitmapDrawableBack = (BitmapDrawable)res.getDrawable( R.drawable.back,null);
 		bitmapBack = bitmapDrawableBack.getBitmap();
-		
-		// ·£´ıÀ¸·Î ÀÌ¹ÌÁö¸¦ ÀĞ¾î¿Â´Ù.
+
+		// ëœë¤ìœ¼ë¡œ ì´ë¯¸ì§€ë¥¼ ì½ì–´ì˜¨ë‹¤.
 		getRandomImages();
-		// Àû´çÈ÷ ¼¯´Â´Ù.
-		mixIndexes();	
-		// ºä¸¦ ¹èÄ¥ÇÑ´Ù
+		// ì ë‹¹íˆ ì„ëŠ”ë‹¤.
+		mixIndexes();
+		// ë·°ë¥¼ ë°°ì¹ í•œë‹¤
 		setViews();
-		// Ä«µå µŞ¸éÀ» º¸¿©ÁØ´Ù.
+		// ì¹´ë“œ ë’·ë©´ì„ ë³´ì—¬ì¤€ë‹¤.
 		recoverAllCards();
-		// ÀûÀıÇÑ ÃÊ±âÈ­
-		init();	
-		
+		// ì ì ˆí•œ ì´ˆê¸°í™”
+		init();
+
 	}
-	
+
 	private void mixIndexes(){
 		int temp;
-		
-		// ·£´ıÀ¸·Î Áßº¹¾øÀÌ °ªÀ» »Ì´Â´Ù.
+
+		// ëœë¤ìœ¼ë¡œ ì¤‘ë³µì—†ì´ ê°’ì„ ë½‘ëŠ”ë‹¤.
 		tempArr = getRandomNumbers(0, maximum * maximum - 1, maximum * maximum);
-		temp = 0 ;	
-		//indexes ¹è¿­Àº ·£´ıÀ¸·Î °ªµéÀÌ µé¾î°£´Ù
+		temp = 0 ;
+		//indexes ë°°ì—´ì€ ëœë¤ìœ¼ë¡œ ê°’ë“¤ì´ ë“¤ì–´ê°„ë‹¤
 		for( int i = 0 ; i < indexes.length ; i++ ){
 			indexes[ tempArr[ i ] ] = temp;
 			temp++;
-	
-			// °°Àº Ä«µå°¡ µÎ ÀåÀÌ µé¾î°¡µµ·Ï ÇÑ´Ù.
+
+			// ê°™ì€ ì¹´ë“œê°€ ë‘ ì¥ì´ ë“¤ì–´ê°€ë„ë¡ í•œë‹¤.
 			if( temp >= maximum * maximum / 2 )
 				temp = 0;
 		}
 	}
-	
+
 	private void getRandomImages(){
-		
-		int temp;
+
+		int temp=0;
 		bitmapsDrawables = null;
-		tempArr = null;
-		
-		// ·£´ıÀ¸·Î Áßº¹¾øÀÌ »Ì´Â´Ù. ÃÑ 50¿©ÀåÀÇ Ä«µåÁß maximum * maximum / 2 °³ÀÇ Ä«µå¸¦ »Ì´Â´Ù.
+
+		// ëœë¤ìœ¼ë¡œ ì¤‘ë³µì—†ì´ ë½‘ëŠ”ë‹¤. ì´ 50ì—¬ì¥ì˜ ì¹´ë“œì¤‘ maximum * maximum / 2 ê°œì˜ ì¹´ë“œë¥¼ ë½‘ëŠ”ë‹¤.
 		tempArr = getRandomNumbers(start, end, maximum * maximum / 2 );
 		bitmapsDrawables = new BitmapDrawable[ maximum * maximum / 2 ];
 
-		// ·£´ıÇÑ ÀÌ¹ÌÁö¸¦ ·ÎµåÇÑ´Ù.
-		temp = 0;
+        for(int i=0 ;i< tempArr.length;i++){
+            Log.e("Arr", "tempArr["+i+"]"+tempArr[i]);
+            Log.e("Arr",res.getDrawable(tempArr[i],null)+"");
+        }
+
+		// ëœë¤í•œ ì´ë¯¸ì§€ë¥¼ ë¡œë“œí•œë‹¤.
+
 		for (int i = 0; i < bitmapsDrawables.length; i++) {
-			bitmapsDrawables[ i ] = (BitmapDrawable) res.getDrawable( tempArr[ temp++ ] 	);
+			bitmapsDrawables[ i ] = (BitmapDrawable) res.getDrawable(tempArr[i],null);
+            //bitmapsDrawables[ i ] = (BitmapDrawable) res.getDrawable(R.drawable.m01_songhak_1_1,null);
 		}
 
-		// ºñÆ®¸ÊÀ» ¾ò´Â´Ù.
+		// ë¹„íŠ¸ë§µì„ ì–»ëŠ”ë‹¤.
 		bitmaps = new Bitmap[ maximum * maximum / 2 ];
 		for (int i = 0; i < bitmaps.length; i++) {
 			bitmaps[ i ] = bitmapsDrawables[i].getBitmap();
 		}
+
 	}
-	
+
 	private void recoverAllCards(){
-		// Ä«µå¸¦ ¸ğµÎ µÚÁıÈù »óÅÂ·Î ³õ´Â´Ù.
+		// ì¹´ë“œë¥¼ ëª¨ë‘ ë’¤ì§‘íŒ ìƒíƒœë¡œ ë†“ëŠ”ë‹¤.
 		for (int i = 0; i < buttons.length; i++){
 			buttons[ i ].setImageBitmap( bitmapBack );
-		}		
+		}
 	}
-	
+
 	private void recoverCard(){
-		
-		// µÚÁı¾îº» Ä«µå¸¦ ´Ù½Ã µ¹·Á³õ´Â´Ù.		
+
+		// ë’¤ì§‘ì–´ë³¸ ì¹´ë“œë¥¼ ë‹¤ì‹œ ëŒë ¤ë†“ëŠ”ë‹¤.		
 		buttons[ selectedIndex[ 0 ] ].setImageBitmap( bitmapBack );
 		buttons[ selectedIndex[ 1 ] ].setImageBitmap( bitmapBack );
-		
+
 	}
-	
-	private void setViews(){		
+
+	private void setViews(){
 		int temp;
-		
+
 		temp = 0;
-		
+
 		mainLinear.removeAllViews();
-		
-		// ¹öÆ° »ı¼º
+
+		// ë²„íŠ¼ ìƒì„±
 		buttons = new ImageButton[maximum * maximum];
 		for (int i = 0; i < buttons.length; i++)
 			buttons[ i ] = new ImageButton(this);
-		
-		// ÇàÀ» »ı¼ºÇÑ´Ù ¼öÆò ¸®´Ï¾îÀÌ´Ù.
+
+		// í–‰ì„ ìƒì„±í•œë‹¤ ìˆ˜í‰ ë¦¬ë‹ˆì–´ì´ë‹¤.
 		linearRows = new LinearLayout[maximum];
-		
+
 		for (int i = 0; i < linearRows.length; i++) {
 
 			linearRows[i] = new LinearLayout(this);
-			linearRows[i].setGravity( Gravity.CENTER_HORIZONTAL ); // °¡¿îµ¥ Á¤·Ä
-			linearRows[i].setOrientation( LinearLayout.HORIZONTAL );			
-			
+			linearRows[i].setGravity( Gravity.CENTER_HORIZONTAL ); // ê°€ìš´ë° ì •ë ¬
+			linearRows[i].setOrientation( LinearLayout.HORIZONTAL );
+
 			for (int j = 0; j < maximum; j++) {
-				// linearLayout ¿¡ ÀÌ¹ÌÁö¹öÆ°À» ¹èÄ¡ÇÑ´Ù
+				// linearLayout ì— ì´ë¯¸ì§€ë²„íŠ¼ì„ ë°°ì¹˜í•œë‹¤
 				linearRows[i].addView(buttons[temp++]);
 			}
-			// ¸ŞÀÎ LinearLayout ¿¡ ºä¸¦ ¹èÄ¡ÇÑ´Ù,.
+			// ë©”ì¸ LinearLayout ì— ë·°ë¥¼ ë°°ì¹˜í•œë‹¤,.
 			mainLinear.addView(linearRows[i]);
 		}
 	}
-	
+
 	private void init(){
-		
+
 		is_start=false;
-		time.setText(R.string.initTime);
-		
+		time.setText(R.string.init_time);
+
 		stBtn.setOnClickListener(this);
 		stBtn.setVisibility(View.VISIBLE);
-			
-		// ÀÌº¥Æ® ¸®½º³Ê µî·Ï
-		for( int i = 0 ; i < buttons.length ; i++ ){
-			buttons[ i ].setOnClickListener(this);
-			buttons[ i ].setVisibility(View.VISIBLE);
+
+		// ì´ë²¤íŠ¸ ë¦¬ìŠ¤ë„ˆ ë“±ë¡
+		for (ImageButton button : buttons) {
+			button.setOnClickListener(this);
+			button.setVisibility(View.VISIBLE);
 		}
-		
-		
-		// selectedindex ´Â »ç¿ëÀÚ°¡ ¼±ÅÃÇÑ Ä«µåÀÇ index °¡ µé¾îÀÖ´Ù.
-		// ÀÌ¹Ì ¼±ÅÃµÈ Ä«µå¸¦ ´Ù½Ã ¼±ÅÃÇß´ÂÁö ÆÇ´ÜÇÑ´Ù.
-		selectedIndex =  new int[ 2 ];		
+
+
+		// selectedindex ëŠ” ì‚¬ìš©ìê°€ ì„ íƒí•œ ì¹´ë“œì˜ index ê°€ ë“¤ì–´ìˆë‹¤.
+		// ì´ë¯¸ ì„ íƒëœ ì¹´ë“œë¥¼ ë‹¤ì‹œ ì„ íƒí–ˆëŠ”ì§€ íŒë‹¨í•œë‹¤.
+		selectedIndex =  new int[ 2 ];
 		for( int i = 0 ; i < selectedIndex.length ; i++ ){
 			selectedIndex[ i ] = -1;
 		}
-		
-		// correctindexarray ´Â ÀÌ¹Ì ¸ÂÃá Ä«µåÀÇ index °¡ ÀúÀåµÈ´Ù.
+
+		// correctindexarray ëŠ” ì´ë¯¸ ë§ì¶˜ ì¹´ë“œì˜ index ê°€ ì €ì¥ëœë‹¤.
 		correctIndexArray = new int[ maximum * maximum ];
 		for( int i = 0 ; i < correctIndexArray.length ; i++ ){
 			correctIndexArray[ i ] = -1;
 		}
-		
-		// ¼±ÅÃÇÑ Ä«µåÀÇ ÀÌ¹ÌÁö index °¡ ÀúÀåµÈ´Ù.
-		// ÀÌ¹ÌÁö°¡ ¼­·Î ÀÏÄ¡ÇÏ´ÂÁö ÆÇ´ÜÇÑ´Ù,.
+
+		// ì„ íƒí•œ ì¹´ë“œì˜ ì´ë¯¸ì§€ index ê°€ ì €ì¥ëœë‹¤.
+		// ì´ë¯¸ì§€ê°€ ì„œë¡œ ì¼ì¹˜í•˜ëŠ”ì§€ íŒë‹¨í•œë‹¤,.
 		selectedCardIndex = -1;
-		
-		// bPassible ÀÌ true ÀÏ¶§¸¸ ¹öÆ°Å¬¸¯ÀÌ ÀÛµ¿ÇÑ´Ù.
-		// ÀÌ°ÍÀº 1 ÃÊµ¿¾È µô·¹ÀÌ»óÅÂÀÏ¶§ ´Ù¸¥ ¹öÆ°ÀÌ Å¬¸¯µÇ´Â°ÍÀ» ¸·´Â´Ù.
+
+		// bPassible ì´ true ì¼ë•Œë§Œ ë²„íŠ¼í´ë¦­ì´ ì‘ë™í•œë‹¤.
+		// ì´ê²ƒì€ 1 ì´ˆë™ì•ˆ ë”œë ˆì´ìƒíƒœì¼ë•Œ ë‹¤ë¥¸ ë²„íŠ¼ì´ í´ë¦­ë˜ëŠ”ê²ƒì„ ë§‰ëŠ”ë‹¤.
 		bPassible = true;
-		
+
 	}
-	
+
 	public void onClick(View v) {
 		if(v.equals(stBtn)){
 			is_start =! is_start;
-			
+
 			new Thread(this).start();
 			sw.start();
 		}
-		
-		if( bPassible == false )
+
+		if(!bPassible)
 			return ;
-		
+
 		for( int i = 0 ; i < buttons.length ; i++ ){
 			if( v.equals( buttons[i] ) ){
-				
-				 // ÀÌ¹Ì ¼±ÅÃÇÑ Ä«µåÀÏ°æ¿ì					
+
+				// ì´ë¯¸ ì„ íƒí•œ ì¹´ë“œì¼ê²½ìš°
 				if( selectedIndex[ 0 ] == i ){
 					tv.setTextColor( Color.RED );
 					tv.setText( R.string.already_selected );
 					return ;
 				}
-					
-				// ÀÌ¹Ì Á¤´äÀ» ¸ÂÃá Ä«µåÀÏ °æ¿ì
+
+				// ì´ë¯¸ ì •ë‹µì„ ë§ì¶˜ ì¹´ë“œì¼ ê²½ìš°
 				if( correctIndexArray[ i ] != -1 ){
 					tv.setTextColor( Color.RED );
 					tv.setText( R.string.already_correct );
 					return ;
 				}
-				
-				// Å¬¸¯ÇÑ ÀÌ¹ÌÁö¸¦ º¸¿©ÁØ´Ù.
+
+				// í´ë¦­í•œ ì´ë¯¸ì§€ë¥¼ ë³´ì—¬ì¤€ë‹¤.
 				buttons[ i ].setImageBitmap( bitmaps[ indexes[ i ] ] );
 
-				// Ã³À½Å¬¸¯ÇÑ ÀÌ¹ÌÁöÀÌ¸é
+				// ì²˜ìŒí´ë¦­í•œ ì´ë¯¸ì§€ì´ë©´
 				if( selectedIndex[ 0 ] == -1 ){
 					selectedCardIndex = indexes[ i ];
 					tv.setTextColor( Color.YELLOW );
-					tv.setText( R.string.choice2 ); // µÎ¹øÂ°¸¦ Å¬¸¯ÇØÁÖ¼¼¿ä
+					tv.setText( R.string.choice2 ); // ë‘ë²ˆì§¸ë¥¼ í´ë¦­í•´ì£¼ì„¸ìš”
 					selectedIndex[ 0 ] = i;
-				}												
+				}
 				else{
-					//µÎ¹øÂ° Å¬¸¯ÇÑ ÀÌ¹ÌÁöÀÌ¸é
+					//ë‘ë²ˆì§¸ í´ë¦­í•œ ì´ë¯¸ì§€ì´ë©´
 					selectedIndex[ 1 ] = i;
-					
-					// ÀÌ¹ÌÁö°¡ ÀÏÄ¡ÇÏ¸é
+
+					// ì´ë¯¸ì§€ê°€ ì¼ì¹˜í•˜ë©´
 					if( selectedCardIndex == indexes[ i ] ){
-						
+
 						tv.setTextColor( Color.BLUE );
-						tv.setText( R.string.correct ); // ¸ÂÃè½À´Ï´Ù!
-						// ¸ÂÃáÀÌ¹ÌÁö index ¸¦ ÀúÀåÇÑ´Ù.
+						tv.setText( R.string.correct ); // ë§ì·„ìŠµë‹ˆë‹¤!
+						// ë§ì¶˜ì´ë¯¸ì§€ index ë¥¼ ì €ì¥í•œë‹¤.
 						correctIndexArray[ selectedIndex[ 0 ] ] = 1;
 						correctIndexArray[ selectedIndex[ 1 ] ] = 1;
-						for( int j = 0 ; j < correctIndexArray.length ; j++ ){
-							
-							// ¸ÂÃßÁö ¸øÇÑ Ä«µå°¡ ÀÖÀ» °æ¿ì
-							if( correctIndexArray[ j ] == -1 ){
-								// 1ÃÊÈÄ¿¡ ÇÚµé·¯ ½ÇÇà
-								Handler.sendEmptyMessageDelayed( 1 , 1000 );
-								return ;									
-							}								
+						for (int aCorrectIndexArray : correctIndexArray) {
+
+							// ë§ì¶”ì§€ ëª»í•œ ì¹´ë“œê°€ ìˆì„ ê²½ìš°
+							if (aCorrectIndexArray == -1) {
+								// 1ì´ˆí›„ì— í•¸ë“¤ëŸ¬ ì‹¤í–‰
+								Handler.sendEmptyMessageDelayed(1, 1000);
+								return;
+							}
 						}
-			
+
 						is_start=false;
 						sw.stop();
 
 						tv.setTextColor( Color.BLUE );
 						tv.setText( R.string.clear );
-						
+
 						bPassible = false;
-						
+
 						return ;
 					}
-					else{						
+					else{
 						tv.setTextColor( Color.RED );
-						tv.setText( R.string.wrong ); // Æ²·È½À´Ï´Ù.
+						tv.setText( R.string.wrong ); // í‹€ë ¸ìŠµë‹ˆë‹¤.
 						Handler.sendEmptyMessageDelayed( 0 , 1000 );
 						bPassible = false;
 					}
@@ -302,7 +307,7 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 			}
 		}
 	}
-	
+
 	public void run(){
 		while(is_start){
 			Handler.sendEmptyMessage(2);
@@ -313,56 +318,56 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 			}
 		}
 	}
-	
+
 	Handler Handler = new Handler(){
 		@Override
 		public void handleMessage( Message msg ){
-			
+
 			switch( msg.what )
 			{
-			case 0:	// Æ²¸°°æ¿ì
-				recoverCard();				
-			case 1: // ¸ÂÀº°æ¿ì
-				selectedIndex[ 0 ] = -1;
-				selectedIndex[ 1 ] = -1;
-				bPassible = true;
-				tv.setTextColor( Color.BLUE );
-				tv.setText( R.string.choice1 );
-				break;				
-			case 2:
-				strTime=String.format("%.02f",sw.getFormatF());
-				
-				int nLen=strTime.length();
-				
-				if(nLen!=6)
-					while(6-nLen++>0)
-						strTime="0"+strTime;
-				
-				time.setText(strTime);
-				super.handleMessage(msg);
-				
-			}			
-		}		
+				case 0:	// í‹€ë¦°ê²½ìš°
+					recoverCard();
+				case 1: // ë§ì€ê²½ìš°
+					selectedIndex[ 0 ] = -1;
+					selectedIndex[ 1 ] = -1;
+					bPassible = true;
+					tv.setTextColor( Color.BLUE );
+					tv.setText( R.string.choice1 );
+					break;
+				case 2:
+					strTime=String.format("%.02f",sw.getFormatF());
+
+					int nLen=strTime.length();
+
+					if(nLen!=6)
+						while(6-nLen++>0)
+							strTime="0"+strTime;
+
+					time.setText(strTime);
+					super.handleMessage(msg);
+
+			}
+		}
 	};
-	
+
 	public boolean onCreateOptionsMenu( Menu menu ){
 		super.onCreateOptionsMenu( menu );
-		
-		// ´Ù½Ã¼¯±â ¸Ş´º Ãß°¡
-		MenuItem item = menu.add( 0, 1, 0, "´Ù½Ã ¼¯±â"); 
+
+		// ë‹¤ì‹œì„ê¸° ë©”ë‰´ ì¶”ê°€
+		MenuItem item = menu.add( 0, 1, 0, "ë‹¤ì‹œ ì„ê¸°");
 		item.setIcon( R.drawable.icon );
-		
+
 		return true;
 	}
-	
+
 	public boolean onOptionsItemSelected( MenuItem item ){
 		switch( item.getItemId() )
 		{
 			case 1:
-				
-				//ÃÊ±âÈ­
+
+				//ì´ˆê¸°í™”
 				getRandomImages();
-				mixIndexes();					
+				mixIndexes();
 				setViews();
 				recoverAllCards();
 				init();
@@ -372,41 +377,41 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 	}
 
 
-	public static int[] getRandomNumbers(int start, int end, int num) {
-		// ÀÌ ¸Ş¼­µå´Â start ~ end ¹üÀ§ÀÇ Á¤¼öÁß num °¹¼ö¸¸Å­ÀÇ Á¤¼ö¸¦
-		// ·£´ıÇÏ°Ô Áßº¹¾øÀÌ »Ì¾Æ³À´Ï´Ù.
-		int size; // Å©±âÀÔ´Ï´Ù
-		int temp; // ÀÓ½Ãº¯¼öÀÔ´Ï´Ù.
+	public int[] getRandomNumbers(int start, int end, int num) {
+		// ì´ ë©”ì„œë“œëŠ” start ~ end ë²”ìœ„ì˜ ì •ìˆ˜ì¤‘ num ê°¯ìˆ˜ë§Œí¼ì˜ ì •ìˆ˜ë¥¼
+		// ëœë¤í•˜ê²Œ ì¤‘ë³µì—†ì´ ë½‘ì•„ëƒ…ë‹ˆë‹¤.
+		int size; // í¬ê¸°ì…ë‹ˆë‹¤
+		int temp; // ì„ì‹œë³€ìˆ˜ì…ë‹ˆë‹¤.
 
-		if (start > end || start == end) // ½ÃÀÛÀ§Ä¡°¡ ³¡ À§Ä¡º¸´Ù Å©°Å³ª °°À¸¸é ½ÇÆĞÀÔ´Ï´Ù.
+		if (start > end || start == end) // ì‹œì‘ìœ„ì¹˜ê°€ ë ìœ„ì¹˜ë³´ë‹¤ í¬ê±°ë‚˜ ê°™ìœ¼ë©´ ì‹¤íŒ¨ì…ë‹ˆë‹¤.
 			return null;
 
-		size = end - start + 1; // size ÀÇ Å©±â¸¦ ±¸ÇÕ´Ï´Ù.
+		size = end - start + 1; // size ì˜ í¬ê¸°ë¥¼ êµ¬í•©ë‹ˆë‹¤.
 
-		if (size < num) // size ÀÇ Å©±âº¸´Ù ¿øÇÏ´Â ¼ıÀÚÀÇ °¹¼ö°¡ ¸¹À¸¸é ½ÇÆĞÀÔ´Ï´Ù.
+		if (size < num) // size ì˜ í¬ê¸°ë³´ë‹¤ ì›í•˜ëŠ” ìˆ«ìì˜ ê°¯ìˆ˜ê°€ ë§ìœ¼ë©´ ì‹¤íŒ¨ì…ë‹ˆë‹¤.
 			return null;
 
 		int[] numbers;
 		double[] dRandom;
 		int[] result = null;
-		
+
 		try {
 
 			numbers = new int[size];
 			dRandom = new double[size];
 			result = new int[num];
 
-			// ·£´ıÇÑ ¼ö¸¦ size ¸¸Å­ »ı¼ºÇÕ´Ï´Ù.
+			// ëœë¤í•œ ìˆ˜ë¥¼ size ë§Œí¼ ìƒì„±í•©ë‹ˆë‹¤.
 			for (int i = 0; i < dRandom.length; i++) {
 				dRandom[i] = Math.random();
 			}
-			// Â÷´ë·Î ÇÒ´ç ÈÄ
+			// ì°¨ëŒ€ë¡œ í• ë‹¹ í›„
 			temp = start;
 			for (int i = 0; i < numbers.length; i++) {
 				numbers[i] = temp++;
 			}
 
-			// ·£´ıÀ¸·Î »ı¼ºµÈ ¼ıÀÚ¸¦ Á¤·ÄÇÏ¿© ¼¯½À´Ï´Ù.
+			// ëœë¤ìœ¼ë¡œ ìƒì„±ëœ ìˆ«ìë¥¼ ì •ë ¬í•˜ì—¬ ì„ìŠµë‹ˆë‹¤.
 			for (int i = 0; i < dRandom.length; i++) {
 				for (int j = 0; j < dRandom.length - 1; j++) {
 					double tmp = dRandom[j];
@@ -420,13 +425,15 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 					}
 				}
 			}
-			// °á°ú¸¦ ¸®ÅÏÇÕ´Ï´Ù.
-			for (int i = 0; i < result.length; i++) {
-				result[i] = numbers[i];
-			}
+            // ê²°ê³¼ë¥¼ ë¦¬í„´í•©ë‹ˆë‹¤.
+			System.arraycopy(numbers, 0, result, 0, result.length);
+
 		} catch (Exception e) {
-		}
+            Log.e("bae", "exception: " + e.getMessage());
+            Log.e("bae", "exception: " + e.toString());
+        }
 
 		return result;
 	}
+
 }

@@ -96,9 +96,13 @@ public class G1to50Activity extends Activity implements View.OnClickListener,Run
 
     public void onClick(View v) {
 
-        if(!is_start && v.equals(btns[0])){
+        if(!is_start && (v.equals(btns[0])||v.equals(btns[1])||v.equals(btns[2])||v.equals(btns[3])||v.equals(btns[4])
+                ||v.equals(btns[5]) ||v.equals(btns[6])||v.equals(btns[7])||v.equals(btns[8])||v.equals(btns[9])
+                ||v.equals(btns[10])||v.equals(btns[11])||v.equals(btns[12])||v.equals(btns[13])||v.equals(btns[14])
+                ||v.equals(btns[15]) ||v.equals(btns[16])||v.equals(btns[17])||v.equals(btns[18])||v.equals(btns[19])
+                ||v.equals(btns[20])||v.equals(btns[21])||v.equals(btns[22])||v.equals(btns[23])||v.equals(btns[24]))){
             initNumberArr(1);
-            //shakeNumber();
+            shakeNumber();
 
             for(int i=0; i< 25; i++) {
                 btns[i].setText(num[i]+"");
@@ -109,7 +113,7 @@ public class G1to50Activity extends Activity implements View.OnClickListener,Run
             is_start = !is_start;
 
             initNumberArr(26);
-            //shakeNumber();
+            shakeNumber();
 
             new Thread(this).start();
             sw.start();
@@ -132,8 +136,7 @@ public class G1to50Activity extends Activity implements View.OnClickListener,Run
             index++;
         }
 
-       // if(index == 51)
-        if(index==26)
+        if(index == 51)
         {
             is_start = false;
             sw.stop();
@@ -146,6 +149,7 @@ public class G1to50Activity extends Activity implements View.OnClickListener,Run
         Toast.makeText(getApplicationContext(),playerName+" : "+strTime, Toast.LENGTH_LONG).show();
 
         ShowDialog();
+        finish();
     }
 
     public void run() {
@@ -187,15 +191,7 @@ public class G1to50Activity extends Activity implements View.OnClickListener,Run
         dlg.setTitle("Result");
         result = (TextView)dlg.findViewById(R.id.result);
         String r = strTime;
-        Toast.makeText(getApplicationContext(),result.getText(), Toast.LENGTH_LONG).show();
-
        result.setText(r);
-
-        try {
-            dao.Append(playerName, Double.parseDouble(strTime), "G1to50_RANK");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         dlg.show();
         sw.reset();

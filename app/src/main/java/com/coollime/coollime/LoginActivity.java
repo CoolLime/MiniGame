@@ -17,8 +17,6 @@ public class LoginActivity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 Intent Menu = new Intent(LoginActivity.this, MenuActivity.class);
-                // Intent Game = new Intent(LoginActivity.this, CardActivity.class);
-                //Game.putExtra("Name", acct.getDisplayName());
                 startActivity(Menu);
                 finish();
 
