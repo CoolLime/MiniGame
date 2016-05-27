@@ -93,7 +93,7 @@ public class MenuActivity extends AppCompatActivity {
                     fragment=new memoryFragment();
                     break;
                 case 3:
-                    fragment=new sildingFragment();
+                    fragment=new slidingFragment();
                     break;
 
             }

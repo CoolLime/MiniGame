@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 
-public class sildingFragment extends Fragment {
+public class slidingFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -25,7 +25,8 @@ public class sildingFragment extends Fragment {
         select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent sliding = new Intent(getActivity(), SlidingActivity.class);
+                startActivity(sliding);
             }
         });
 
@@ -37,7 +38,7 @@ public class sildingFragment extends Fragment {
         public static final int REQUEST_CODE_ANOTHER = 1001;
 
         public void onButton4Click(View v) {
-            Intent intent = new Intent(getApplicationContext(), sildingActivity4.class);
+            Intent intent = new Intent(getApplicationContext(), SlidingActivity.class);
             startActivityForResult(intent, REQUEST_CODE_ANOTHER);
         }
 

@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class CardActivity extends Activity implements View.OnClickListener, Runnable {
@@ -78,11 +79,11 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 		res = getResources(); // 리소스 얻기
 		indexes = new int[ maximum * maximum ]; // 이미지의 고유번호를 기억한다.
 
-		start = 0x7f02007f; // 리소스 번호 처음
-		end = 0x7f0200ac; // 리소스 번호 마지막
+		start = 0x7f02008e; // 리소스 번호 처음
+		end = 0x7f0200bb; // 리소스 번호 마지막
 
 		// 시작부터 끝까지 카드중 8개의 카드를 뽑아낸다.
-		bitmapDrawableBack = (BitmapDrawable) ResourcesCompat.getDrawable(getResources(), R.drawable.back,null);
+		bitmapDrawableBack = (BitmapDrawable) ResourcesCompat.getDrawable(getResources(), R.drawable.m00_back,null);
 		bitmapBack = bitmapDrawableBack.getBitmap();
 
 		// 랜덤으로 이미지를 읽어온다.
@@ -133,7 +134,6 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 
 		for (int i = 0; i < bitmapsDrawables.length; i++) {
 			bitmapsDrawables[ i ] = (BitmapDrawable) ResourcesCompat.getDrawable(getResources(),tempArr[i],null);
-            //bitmapsDrawables[ i ] = (BitmapDrawable) res.getDrawable(R.drawable.m01_songhak_1_1,null);
 		}
 
 		// 비트맵을 얻는다.
@@ -198,10 +198,6 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 		stBtn.setVisibility(View.VISIBLE);
 
 		// 이벤트 리스너 등록
-		for (ImageButton button : buttons) {
-			button.setOnClickListener(this);
-			button.setVisibility(View.VISIBLE);
-		}
 
 
 		// selectedindex 는 사용자가 선택한 카드의 index 가 들어있다.
@@ -229,12 +225,16 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 
 	public void onClick(View v) {
 		if(v.equals(stBtn)){
-			is_start =! is_start;
+			is_start=!is_start;
 
 			new Thread(this).start();
 			sw.start();
-		}
 
+			for (ImageButton button : buttons) {
+				button.setOnClickListener(this);
+				button.setVisibility(View.VISIBLE);
+			}
+		}
 		if(!bPassible)
 			return ;
 
@@ -282,7 +282,7 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 							// 맞추지 못한 카드가 있을 경우
 							if (aCorrectIndexArray == -1) {
 								// 1초후에 핸들러 실행
-								Handler.sendEmptyMessageDelayed(1, 1000);
+								Handler.sendEmptyMessageDelayed(1, 50);
 								return;
 							}
 						}
@@ -292,6 +292,8 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 
 						tv.setTextColor( Color.BLUE );
 						tv.setText( R.string.clear );
+						Toast.makeText(getApplicationContext()," : "+strTime, Toast.LENGTH_LONG).show();
+
 
 						bPassible = false;
 
@@ -300,7 +302,7 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 					else{
 						tv.setTextColor( Color.RED );
 						tv.setText( R.string.wrong ); // 틀렸습니다.
-						Handler.sendEmptyMessageDelayed( 0 , 1000 );
+						Handler.sendEmptyMessageDelayed( 0 , 500);
 						bPassible = false;
 					}
 				}
@@ -350,32 +352,6 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 			}
 		}
 	};
-
-	public boolean onCreateOptionsMenu( Menu menu ){
-		super.onCreateOptionsMenu( menu );
-
-		// 다시섞기 메뉴 추가
-		MenuItem item = menu.add( 0, 1, 0, "다시 섞기");
-		item.setIcon( R.drawable.icon );
-
-		return true;
-	}
-
-	public boolean onOptionsItemSelected( MenuItem item ){
-		switch( item.getItemId() )
-		{
-			case 1:
-				//초기화
-				getRandomImages();
-				mixIndexes();
-				setViews();
-				recoverAllCards();
-				init();
-				return true;
-		}
-		return false;
-	}
-
 
 	public int[] getRandomNumbers(int start, int end, int num) {
 		// 이 메서드는 start ~ end 범위의 정수중 num 갯수만큼의 정수를
@@ -429,8 +405,7 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 			System.arraycopy(numbers, 0, result, 0, result.length);
 
 		} catch (Exception e) {
-            Log.e("bae", "exception: " + e.getMessage());
-            Log.e("bae", "exception: " + e.toString());
+
         }
 
 		return result;
