@@ -12,8 +12,6 @@ import android.os.Message;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -198,6 +196,10 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 		stBtn.setVisibility(View.VISIBLE);
 
 		// 이벤트 리스너 등록
+        for (ImageButton button : buttons) {
+            button.setOnClickListener(this);
+            button.setVisibility(View.VISIBLE);
+        }
 
 
 		// selectedindex 는 사용자가 선택한 카드의 index 가 들어있다.
@@ -224,17 +226,17 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 	}
 
 	public void onClick(View v) {
-		if(v.equals(stBtn)){
-			is_start=!is_start;
 
-			new Thread(this).start();
-			sw.start();
+		if(!is_start&&(v.equals(buttons[0])||v.equals(buttons[1])||v.equals(buttons[2])||v.equals(buttons[3])||v.equals(buttons[4])
+				||v.equals(buttons[5]) ||v.equals(buttons[6])||v.equals(buttons[7])||v.equals(buttons[8])||v.equals(buttons[9])
+				||v.equals(buttons[10])||v.equals(buttons[11])||v.equals(buttons[12])||v.equals(buttons[13])||v.equals(buttons[14])
+				||v.equals(buttons[15]))) {
 
-			for (ImageButton button : buttons) {
-				button.setOnClickListener(this);
-				button.setVisibility(View.VISIBLE);
-			}
-		}
+            is_start = !is_start;
+            new Thread(this).start();
+            sw.start();
+
+        }
 		if(!bPassible)
 			return ;
 
