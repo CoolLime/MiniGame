@@ -11,6 +11,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,10 +21,11 @@ import java.util.Random;
 
 public class memoryActivity3 extends AppCompatActivity{
     GameView a;
-    public void onCreate(Bundle SaveInstanceState){
-        super.onCreate(SaveInstanceState);
+    public void onCreate(Bundle SavedInstanceState){
+        super.onCreate(SavedInstanceState);
         a=new GameView(this);
-       // setContentView(R.layout.layout_memory);
+        setContentView(a);
+        // setContentView(R.layout.layout_memory);
 
     }
 
@@ -31,13 +33,16 @@ public class memoryActivity3 extends AppCompatActivity{
 class GameView extends View {
     final static int Blank = 0;
     final static int Play = 1;
-    final static int SIZE = 64;
+    final static int SIZE = 128;
     static int FLAG=0;
     static int Score=0;
+    static Vibrator vibe;
+
 
     static Boolean randomShape = true;
     static Boolean randomSize = true;
     static Boolean randomColor = true;
+
 
     final static int DELAY = 1000;
 
@@ -50,7 +55,7 @@ class GameView extends View {
     public GameView(Context context) {
         super(context);
         parent = (memoryActivity3) context;
-
+        vibe = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
         status = Blank;
         cHandler.sendEmptyMessageDelayed(0,DELAY);
 
@@ -101,6 +106,7 @@ class GameView extends View {
 
             if (flo == arShape.size() - 1) {
                 status = Blank;
+                vibe.vibrate(50);
                 Score=Score+(FLAG+1)*10;
                 FLAG=0;
                 invalidate();
@@ -108,6 +114,7 @@ class GameView extends View {
             }else if(flo==FLAG){
                 FLAG++;
                 Score=Score+(FLAG+1)*10;
+                vibe.vibrate(50);
             }
             else {
                 new AlertDialog.Builder(getContext()).setMessage("다시하기")
@@ -159,7 +166,7 @@ class GameView extends View {
                 }
 
             }
-            if (!bFindInterSect) {
+            if (bFindInterSect==false) {
                 break;
             }
         }
@@ -170,7 +177,7 @@ class GameView extends View {
         }
 
         if (randomColor) {
-            switch (R.nextInt(6)) {
+            switch (R.nextInt(9)) {
                 case 0:
                     shape.color = Color.BLACK;
                     break;
@@ -189,6 +196,16 @@ class GameView extends View {
                 case 5:
                     shape.color = Color.YELLOW;
                     break;
+                case 6:
+                    shape.color=Color.MAGENTA;
+                    break;
+                case  7:
+                    shape.color=Color.CYAN;
+                    break;
+                case 8:
+                    shape.color=Color.DKGRAY;
+                    break;
+
             }
         } else {
             shape.color = Color.BLACK;
