@@ -48,7 +48,6 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 	TextView tv;		//게임 진행 상태 텍스트 뷰
 	StopWatch sw=null;	//스톱 워치 클래스
 	TextView time=null;	//스톱 워치 텍스트뷰
-	Button stBtn;
 
 	boolean is_start=false;
 	String strTime="000.00";
@@ -66,7 +65,6 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 		mainLinear = (LinearLayout) findViewById(R.id.main_linear); // 전체 리니어
 		time = (TextView)findViewById(R.id.time);
 		time.setTextColor(Color.RED);
-		stBtn=(Button)findViewById(R.id.stBtn);
 
 		sw=new StopWatch();
 
@@ -192,9 +190,6 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
 		is_start=false;
 		time.setText(R.string.init_time);
 
-		stBtn.setOnClickListener(this);
-		stBtn.setVisibility(View.VISIBLE);
-
 		// 이벤트 리스너 등록
         for (ImageButton button : buttons) {
             button.setOnClickListener(this);
@@ -235,7 +230,6 @@ public class CardActivity extends Activity implements View.OnClickListener, Runn
             is_start = !is_start;
             new Thread(this).start();
             sw.start();
-
         }
 		if(!bPassible)
 			return ;
