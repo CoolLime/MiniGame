@@ -10,7 +10,8 @@
 
     <ListView android:id="@+id/g1to50Rank"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/start">
     </ListView>
 
     <Button

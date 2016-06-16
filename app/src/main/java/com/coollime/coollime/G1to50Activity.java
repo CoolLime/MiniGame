@@ -2,11 +2,13 @@ package com.coollime.coollime;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Vibrator;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +32,8 @@ public class G1to50Activity extends Activity implements View.OnClickListener,Run
     private TextView result = null;
     String strTime = "000.00";
     String playerName = null;
+    static Vibrator vibe;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,7 @@ public class G1to50Activity extends Activity implements View.OnClickListener,Run
         time.setTextColor(Color.RED);
 
         sw = new StopWatch();
+        vibe = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 
         Init();
         InitValue();
@@ -119,6 +124,9 @@ public class G1to50Activity extends Activity implements View.OnClickListener,Run
             sw.start();
         }
 
+        if(is_start){
+            vibe.vibrate(25);
+        }
 
         int x = Integer.parseInt(((Button)v).getText().toString());
 
@@ -149,7 +157,7 @@ public class G1to50Activity extends Activity implements View.OnClickListener,Run
         Toast.makeText(getApplicationContext(),playerName+" : "+strTime, Toast.LENGTH_LONG).show();
 
         ShowDialog();
-        finish();
+
     }
 
     public void run() {
@@ -191,14 +199,13 @@ public class G1to50Activity extends Activity implements View.OnClickListener,Run
         dlg.setTitle("Result");
         result = (TextView)dlg.findViewById(R.id.result);
         String r = strTime;
-       result.setText(r);
+        result.setText(r);
 
         dlg.show();
         sw.reset();
         InitValue();
 
     }
-
 
 
 

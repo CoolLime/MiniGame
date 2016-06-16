@@ -1,18 +1,14 @@
 {
   "project_info": {
-    "project_id": "minigame-5096a",
     "project_number": "31388769383",
-    "name": "MiniGame"
+    "project_id": "minigame-5096a"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:31388769383:android:7c8920aabcc8b370",
-        "client_id": "android:com.coollime.coollime",
-        "client_type": 1,
         "android_client_info": {
-          "package_name": "com.coollime.coollime",
-          "certificate_hash": []
+          "package_name": "com.coollime.minigame"
         }
       },
       "oauth_client": [
@@ -20,30 +16,74 @@
           "client_id": "31388769383-6ssdr2597ak8ik387oppkp9nl3bf69oh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.coollime.coollime",
+            "package_name": "com.coollime.minigame",
             "certificate_hash": "A9972615EB7A0338C620715279D73FC01280153C"
           }
+        },
+        {
+          "client_id": "31388769383-h7se0ppeqh8mfaeua6kii88jt7jqtpp5.apps.googleusercontent.com",
+          "client_type": 3
         },
         {
           "client_id": "31388769383-k21qce653v5qg5d0haudn6fa17i1q0aj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
-      "api_key": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8_-ip1Jm9JtyLyMdcLUrLPojCClA4WmQ"
+        }
+      ],
       "services": {
         "analytics_service": {
           "status": 1
-        },
-        "cloud_messaging_service": {
-          "status": 1,
-          "apns_config": []
         },
         "appinvite_service": {
           "status": 1,
           "other_platform_oauth_client": []
         },
-        "google_signin_service": {
-          "status": 2
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:31388769383:android:85d07dac0f6163f4",
+        "android_client_info": {
+          "package_name": "com.coollime.coollime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "31388769383-ujub5ctae947dj1g1kht4gbs1un047r4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.coollime.coollime",
+            "certificate_hash": "A9972615EB7A0338C620715279D73FC01280153C"
+          }
+        },
+        {
+          "client_id": "31388769383-h7se0ppeqh8mfaeua6kii88jt7jqtpp5.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "31388769383-k21qce653v5qg5d0haudn6fa17i1q0aj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8_-ip1Jm9JtyLyMdcLUrLPojCClA4WmQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 1
@@ -51,6 +91,5 @@
       }
     }
   ],
-  "client_info": [],
-  "ARTIFACT_VERSION": "1"
+  "configuration_version": "1"
 }

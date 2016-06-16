@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -60,7 +59,7 @@ public class MenuActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.g1to50, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+           // TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 
 
             return rootView;
