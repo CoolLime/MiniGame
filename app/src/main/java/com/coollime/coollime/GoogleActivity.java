@@ -29,12 +29,12 @@ public class GoogleActivity extends AppCompatActivity implements
     private static final int RC_SIGN_IN = 9001;
     private ProgressDialog mProgressDialog;
     private GoogleApiClient mGoogleApiClient;
-    private boolean flag =false;
+    private boolean flag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google);
-
+        flag=false;
 
         // Button listeners
         findViewById(R.id.sign_in_button).setOnClickListener(this);
@@ -121,6 +121,7 @@ public class GoogleActivity extends AppCompatActivity implements
             if(!flag){
                 Intent menu = new Intent(GoogleActivity.this, MenuActivity.class);
                 startActivity(menu);
+                flag= true;
             }
 
 
